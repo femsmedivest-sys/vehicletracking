@@ -179,13 +179,23 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.card h3 {
+/* .card h3 {
     margin: 0;
     font-size: 1.5em;
-    color: white; /* Wajib putih untuk latar belakang gelap */
+    color: white; 
     position: relative; 
+    z-index: 3; 
+} */
+
+/* Make sure hospital name and system name are centered */
+.card h3, .system-card .card-title {
+    text-align: center;
+    margin: 0 0 10px 0;
+    width: 100%;
+    color: white; /* Wajib putih untuk latar belakang gelap */
     z-index: 3; /* Pastikan di atas overlay */
 }
+
 
 /* === GAYA OVERLAY BARU (GLOBAL) === */
 .card-overlay {
@@ -344,7 +354,7 @@ body {
 }
 
 /* Gaya untuk Status Container di halaman utama */
-.status-container {
+/* .status-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -352,13 +362,55 @@ body {
     margin-top: 10px;
     font-size: 0.9em;
     width: 100%;
-    position: relative; /* Penting untuk z-index */
-    z-index: 3; /* Lebih tinggi dari overlay */
+    position: relative;
+    z-index: 3; 
+} */
+
+/* Update the status container to use vertical layout */
+.status-container {
+    display: flex;
+    flex-direction: column;  /* Changed from row to column */
+    align-items: center;     /* Center horizontally */
+    justify-content: center;
+    gap: 8px;                /* Space between buttons */
+    margin-top: 10px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
 }
+
+/* Create a row for the top two buttons (Functioning + JPJ Pass) */
+.status-row-top {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Create a row for the bottom two buttons (Not Functioning + JPJ Fail) */
+.status-row-bottom {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
 /* Kembalikan warna teks status ke hitam agar kotak status menonjol */
-.status-box {
+/* .status-box {
     color: #000000 !important;
     z-index: 4;
+} */
+
+/* Style for individual status boxes to ensure proper sizing */
+.status-box {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    color: #000000 !important;
 }
 
 /* Gaya untuk Loading Spinner */
@@ -869,6 +921,7 @@ body {
 
 /* 2. KAD UTAMA (Wajib guna position: relative) */
 .system-card {
+    text-align: center;
     position: relative; 
     display: flex;         
     flex-direction: column; 
@@ -893,7 +946,15 @@ body {
     font-size: 1.5em; /* Jadikan tajuk lebih besar jika perlu */
     font-weight: bold; /* Pastikan ia tebal/bold */
     margin-bottom: 10px; /* Tambah jarak di bawah tajuk */
+    display: block;
     text-align: center;
+    width: 100%;
+}
+
+.system-card .card-title {
+    display: block;
+    text-align: center;
+    width: 100%;
 }
 
 .card-overlay {
