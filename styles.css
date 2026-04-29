@@ -344,12 +344,12 @@ body {
 
 /* Add these new JPJ status styles */
 .status-JPJ-PASS {
-    background-color: #26ff00;
+    background-color: #5ced73;
     color: #000000 !important;
 }
 
 .status-JPJ-FAIL {
-    background-color: #ff0000;
+    background-color: #ff2c2c;
     color: #000000 !important;
 }
 
