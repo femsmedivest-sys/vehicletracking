@@ -123,8 +123,8 @@ const criticalSystems = [
 //---------------------------------link submission form--------------------------------------------------
 const submissionForms = {
     //NEGERI SEMBILAN
-    'TUANKU-JAAFAR_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/HTJ.html',
-    'TUANKU-JAAFAR_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/HTJ.html',
+    'TUANKU-JAAFAR_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/HTJ.html',
+    'TUANKU-JAAFAR_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/HTJ.html',
     // 'TUANKU-JAAFAR_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/HTJ.html',
     // 'TUANKU-JAAFAR_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/HTJ.html',
     // 'TUANKU-JAAFAR_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/HTJ.html',
@@ -134,8 +134,8 @@ const submissionForms = {
     // 'TUANKU-JAAFAR_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/HTJ.html',
     // 'TUANKU-JAAFAR_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/HTJ.html',
 
-    'JMP-JEMPOL_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/JMP.html',
-    'JMP-JEMPOL_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/JMP.html',
+    'JMP-JEMPOL_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/JMP.html',
+    'JMP-JEMPOL_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/JMP.html',
     // 'JMP-JEMPOL_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/JMP.html',
     // 'JMP-JEMPOL_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/JMP.html',
     // 'JMP-JEMPOL_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/JMP.html',
@@ -145,8 +145,8 @@ const submissionForms = {
     // 'JMP-JEMPOL_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/JMP.html',
     // 'JMP-JEMPOL_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/JMP.html',
 
-    'TMP-TAMPIN_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/TMP.html',
-    'TMP-TAMPIN_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/TMP.html',
+    'TMP-TAMPIN_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/TMP.html',
+    'TMP-TAMPIN_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/TMP.html',
     // 'TMP-TAMPIN_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/TMP.html',
     // 'TMP-TAMPIN_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/TMP.html',
     // 'TMP-TAMPIN_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/TMP.html',
@@ -156,8 +156,8 @@ const submissionForms = {
     // 'TMP-TAMPIN_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/TMP.html',
     // 'TMP-TAMPIN_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/TMP.html',
 
-    'PDX-PORT-DICKSON_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PDX.html',
-    'PDX-PORT-DICKSON_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PDX.html',
+    'PDX-PORT-DICKSON_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PDX.html',
+    'PDX-PORT-DICKSON_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PDX.html',
     // 'PDX-PORT-DICKSON_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/PDX.html',
     // 'PDX-PORT-DICKSON_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/PDX.html',
     // 'PDX-PORT-DICKSON_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/PDX.html',
@@ -167,8 +167,8 @@ const submissionForms = {
     // 'PDX-PORT-DICKSON_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/PDX.html',
     // 'PDX-PORT-DICKSON_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/PDX.html',
 
-    'JLB-JELEBU_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/JLB.html',
-    'JLB-JELEBU_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/JLB.html',
+    'JLB-JELEBU_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/JLB.html',
+    'JLB-JELEBU_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/JLB.html',
     // 'JLB-JELEBU_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/JLB.html',
     // // 'JLB-JELEBU_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/JLB.html',
     // 'JLB-JELEBU_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/JLB.html',
@@ -178,8 +178,8 @@ const submissionForms = {
     // 'JLB-JELEBU_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/JLB.html',
     // 'JLB-JELEBU_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/JLB.html',
 
-    'KPL-KUALA-PILAH_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KPL.html',
-    'KPL-KUALA-PILAH_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KPL.html',
+    'KPL-KUALA-PILAH_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KPL.html',
+    'KPL-KUALA-PILAH_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KPL.html',
     // 'KPL-KUALA-PILAH_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/KPL.html',
     // 'KPL-KUALA-PILAH_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/KPL.html',
     // 'KPL-KUALA-PILAH_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/KPL.html',
@@ -190,8 +190,8 @@ const submissionForms = {
     // 'KPL-KUALA-PILAH_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/KPL.html',
     
     //MELAKA
-    'MKA-MLK_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MKA.html',
-    'MKA-MLK_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MKA.html',
+    'MKA-MLK_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MKA.html',
+    'MKA-MLK_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MKA.html',
     // 'MKA-MLK_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/MKA.html',
     // 'MKA-MLK_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/MKA.html',
     // 'MKA-MLK_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/MKA.html',
@@ -201,8 +201,8 @@ const submissionForms = {
     // 'MKA-MLK_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/MKA.html',
     // 'MKA-MLK_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/MKA.html',
 
-    'AGJ-ALOR-GAJAH_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
-    'AGJ-ALOR-GAJAH_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
+    'AGJ-ALOR-GAJAH_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
+    'AGJ-ALOR-GAJAH_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
     // 'AGJ-ALOR-GAJAH_Autoclave': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
     // 'AGJ-ALOR-GAJAH_Lift': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
     // 'AGJ-ALOR-GAJAH_Fire Protection System': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
@@ -212,8 +212,8 @@ const submissionForms = {
     // 'AGJ-ALOR-GAJAH_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
     // 'AGJ-ALOR-GAJAH_BAS System': 'https://femsmedivest-sys.github.io/vehicleform/AGJ.html',
 
-    'JSN-JASIN_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/JSN.html',
-    'JSN-JASIN_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/JSN.html',
+    'JSN-JASIN_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/JSN.html',
+    'JSN-JASIN_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/JSN.html',
     // 'JSN-JASIN_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/JSN.html',
     // 'JSN-JASIN_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/JSN.html',
     // 'JSN-JASIN_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/JSN.html',
@@ -224,8 +224,8 @@ const submissionForms = {
     // 'JSN-JASIN_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/JSN.html',
 
     //JOHOR DARUL TAKZIM (JDT)
-    'HSA-JOHOR_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/HSA.html',
-    'HSA-JOHOR_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/HSA.html',
+    'HSA-JOHOR_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/HSA.html',
+    'HSA-JOHOR_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/HSA.html',
     // 'HSA-JOHOR_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/HSA.html',
     // 'HSA-JOHOR_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/HSA.html',
     // 'HSA-JOHOR_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/HSA.html',
@@ -235,8 +235,8 @@ const submissionForms = {
     // 'HSA-JOHOR_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/HSA.html',
     // 'HSA-JOHOR_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/HSA.html',
 
-    'HSI-JOHOR_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/HSI.html',
-    'HSI-JOHOR_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/HSI.html',
+    'HSI-JOHOR_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/HSI.html',
+    'HSI-JOHOR_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/HSI.html',
     // 'HSI-JOHOR_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/HSI.html',
     // 'HSI-JOHOR_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/HSI.html',
     // 'HSI-JOHOR_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/HSI.html',
@@ -246,8 +246,8 @@ const submissionForms = {
     // 'HSI-JOHOR_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/HSI.html',
     // 'HSI-JOHOR_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/HSI.html',
 
-    'HPSF-MUAR_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MUR.html',
-    'HPSF-MUAR_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MUR.html',
+    'HPSF-MUAR_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MUR.html',
+    'HPSF-MUAR_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MUR.html',
     // 'HPSF-MUAR_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/MUR.html',
     // 'HPSF-MUAR_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/MUR.html',
     // 'HPSF-MUAR_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/MUR.html',
@@ -257,8 +257,8 @@ const submissionForms = {
     // 'HPSF-MUAR_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/MUR.html',
     // 'HPSF-MUAR_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/MUR.html',
 
-    'KLN-KLUANG_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KLN.html',
-    'KLN-KLUANG_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KLN.html',
+    'KLN-KLUANG_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KLN.html',
+    'KLN-KLUANG_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KLN.html',
     // 'KLN-KLUANG_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/KLN.html',
     // 'KLN-KLUANG_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/KLN.html',
     // 'KLN-KLUANG_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/KLN.html',
@@ -268,8 +268,8 @@ const submissionForms = {
     // 'KLN-KLUANG_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/KLN.html',
     // 'KLN-KLUANG_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/KLN.html',
 
-    'BPH-BATU-PAHAT_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/BPH.html',
-    'BPH-BATU-PAHAT_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/BPH.html',
+    'BPH-BATU-PAHAT_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/BPH.html',
+    'BPH-BATU-PAHAT_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/BPH.html',
     // 'BPH-BATU-PAHAT_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/BPH.html',
     // 'BPH-BATU-PAHAT_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/BPH.html',
     // 'BPH-BATU-PAHAT_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/BPH.html',
@@ -279,8 +279,8 @@ const submissionForms = {
     // 'BPH-BATU-PAHAT_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/BPH.html',
     // 'BPH-BATU-PAHAT_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/BPH.html',
 
-    'PON-PONTIAN_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PON.html',
-    'PON-PONTIAN_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PON.html',
+    'PON-PONTIAN_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PON.html',
+    'PON-PONTIAN_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PON.html',
     // 'PON-PONTIAN_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/PON.html',
     // 'PON-PONTIAN_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/PON.html',
     // 'PON-PONTIAN_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/PON.html',
@@ -290,8 +290,8 @@ const submissionForms = {
     // 'PON-PONTIAN_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/PON.html',
     // 'PON-PONTIAN_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/PON.html',
 
-    'SEG-SEGAMAT_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/SGT.html',
-    'SEG-SEGAMAT_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/SGT.html',
+    'SEG-SEGAMAT_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/SGT.html',
+    'SEG-SEGAMAT_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/SGT.html',
     // 'SEG-SEGAMAT_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/SGT.html',
     // 'SEG-SEGAMAT_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/SGT.html',
     // 'SEG-SEGAMAT_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/SGT.html',
@@ -301,8 +301,8 @@ const submissionForms = {
     // 'SEG-SEGAMAT_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/SGT.html',
     // 'SEG-SEGAMAT_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/SGT.html',
 
-    'HTSMTI-KULAI_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KUL.html',
-    'HTSMTI-KULAI_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KUL.html',
+    'HTSMTI-KULAI_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KUL.html',
+    'HTSMTI-KULAI_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KUL.html',
     // 'HTSMTI-KULAI_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/KUL.html',
     // 'HTSMTI-KULAI_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/KUL.html',
     // 'HTSMTI-KULAI_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/KUL.html',
@@ -312,8 +312,8 @@ const submissionForms = {
     // 'HTSMTI-KULAI_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/KUL.html',
     // 'HTSMTI-KULAI_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/KUL.html',
 
-    'KTG-KOTA-TINGGI_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KTG.html',
-    'KTG-KOTA-TINGGI_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/KTG.html',
+    'KTG-KOTA-TINGGI_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KTG.html',
+    'KTG-KOTA-TINGGI_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/KTG.html',
     // 'KTG-KOTA-TINGGI_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/KTG.html',
     // 'KTG-KOTA-TINGGI_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/KTG.html',
     // 'KTG-KOTA-TINGGI_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/KTG.html',
@@ -323,8 +323,8 @@ const submissionForms = {
     // 'KTG-KOTA-TINGGI_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/KTG.html',
     // 'KTG-KOTA-TINGGI_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/KTG.html',
 
-    'MER-MERSING_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MER.html',
-    'MER-MERSING_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MER.html',
+    'MER-MERSING_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MER.html',
+    'MER-MERSING_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MER.html',
     // 'MER-MERSING_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/MER.html',
     // 'MER-MERSING_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/MER.html',
     // 'MER-MERSING_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/MER.html',
@@ -334,8 +334,8 @@ const submissionForms = {
     // 'MER-MERSING_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/MER.html',
     // 'MER-MERSING_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/MER.html',
 
-    'TGK-TANGKAK_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/TGK.html',
-    'TGK-TANGKAK_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/TGK.html',
+    'TGK-TANGKAK_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/TGK.html',
+    'TGK-TANGKAK_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/TGK.html',
     // 'TGK-TANGKAK_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/TGK.html',
     // 'TGK-TANGKAK_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/TGK.html',
     // 'TGK-TANGKAK_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/TGK.html',
@@ -345,8 +345,8 @@ const submissionForms = {
     // 'TGK-TANGKAK_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/TGK.html',
     // 'TGK-TANGKAK_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/TGK.html',
 
-    'MKJ-JB_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MKJ.html',
-    'MKJ-JB_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/MKJ.html',
+    'MKJ-JB_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MKJ.html',
+    'MKJ-JB_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/MKJ.html',
     // 'MKJ-JB_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/MKJ.html',
     // 'MKJ-JB_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/MKJ.html',
     // 'MKJ-JB_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/MKJ.html',
@@ -356,8 +356,8 @@ const submissionForms = {
     // 'MKJ-JB_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/MKJ.html',
     // 'MKJ-JB_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/MKJ.html',
 
-    'PER-PERMAI_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PER.html',
-    'PER-PERMAI_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PER.html',
+    'PER-PERMAI_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PER.html',
+    'PER-PERMAI_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PER.html',
     // 'PER-PERMAI_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/PER.html',
     // 'PER-PERMAI_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/PER.html',
     // 'PER-PERMAI_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/PER.html',
@@ -367,8 +367,8 @@ const submissionForms = {
     // 'PER-PERMAI_Medical Gas Pipeline System': 'https://femsmedivest-sys.github.io/Submission-Form/PER.html',
     // 'PER-PERMAI_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/PER.html',
 
-    'PGD-PASIR-GUDANG_Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PGD.html',
-    'PGD-PASIR-GUDANG_Non Ambulance': 'https://femsmedivest-sys.github.io/vehicleform/PGD.html'
+    'PGD-PASIR-GUDANG_AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PGD.html',
+    'PGD-PASIR-GUDANG_NON AMBULANCE': 'https://femsmedivest-sys.github.io/vehicleform/PGD.html'
     // 'PGD-PASIR-GUDANG_Autoclave': 'https://femsmedivest-sys.github.io/Submission-Form/PGD.html',
     // 'PGD-PASIR-GUDANG_Lift': 'https://femsmedivest-sys.github.io/Submission-Form/PGD.html',
     // 'PGD-PASIR-GUDANG_Fire Protection System': 'https://femsmedivest-sys.github.io/Submission-Form/PGD.html',
@@ -547,14 +547,14 @@ async function setupHospitalPage() {
           // Check if current hospital is JLB and filter out specific systems
           let systemsToShow = criticalSystems;
 
-          if (hospitalId === 'JLB-JELEBU') {
-            // Remove LIFT and AIR HANDLING UNIT (and any others you don't want)
-            systemsToShow = criticalSystems.filter(system => {
-              // List the system IDs to exclude for JLB hospital
-              const excludedSystems = ['Lift', 'Air Handling Unit']; // IDs to remove
-              return !excludedSystems.includes(system.id);
-            });
-          }
+          // if (hospitalId === 'JLB-JELEBU') {
+          //   // Remove LIFT and AIR HANDLING UNIT (and any others you don't want)
+          //   systemsToShow = criticalSystems.filter(system => {
+          //     // List the system IDs to exclude for JLB hospital
+          //     const excludedSystems = ['Lift', 'Air Handling Unit']; // IDs to remove
+          //     return !excludedSystems.includes(system.id);
+          //   });
+          // }
 
             // REPLACE the system card generation section inside setupHospitalPage function (lines ~505-521)
 // Find this section and replace the systemsToShow.forEach loop with:
