@@ -108,8 +108,8 @@ const hospitalData = [
 ];
 
 const criticalSystems = [
-    { name: "Ambulance", id: "Ambulance"},
-    { name: "Non Ambulance", id: "Non Ambulance"},
+    { name: "AMBULANCE", id: "AMBULANCE"},
+    { name: "NON AMBULANCE", id: "NON AMBULANCE"},
     // { name: "Water Supply System", id: "Water Supply System"},
     // { name: "Autoclave", id: "Autoclave"},
     // { name: "Medical Gas Pipeline System", id: "Medical Gas Pipeline System"},
@@ -522,16 +522,20 @@ async function setupHospitalPage() {
 
             // --- PETA LALUAN GAMBAR (MAP) ---
             const systemImageMap = {
-                "Generator Set": "Gambar-System/genset.webp", 
-                "Electrical Supply": "Gambar-System/ElectricalSupply.webp",
-                "Water Supply System": "Gambar-System/WSS.webp",
-                "Autoclave": "Gambar-System/autoclave.webp",
-                "Medical Gas Pipeline System": "Gambar-System/MGPS.webp",
-                "Lift": "Gambar-System/lift.webp",
-                "Air Handling Unit": "Gambar-System/AHU.webp",
-                "BAS System": "Gambar-System/BAS.webp",
-                "Chiller And Cooling Tower": "Gambar-System/CHILLER.webp", 
-                "Fire Protection System": "Gambar-System/FPS.webp"
+              "AMBULANCE": "Gambar-System/ambulance.webp", 
+              "NON AMBULANCE": "Gambar-System/non-ambulance.webp", 
+                // "Electrical Supply": "Gambar-System/ElectricalSupply.webp",
+                // "Electrical Supply": "Gambar-System/ElectricalSupply.webp",
+                // "Generator Set": "Gambar-System/genset.webp", 
+                // "Electrical Supply": "Gambar-System/ElectricalSupply.webp",
+                // "Water Supply System": "Gambar-System/WSS.webp",
+                // "Autoclave": "Gambar-System/autoclave.webp",
+                // "Medical Gas Pipeline System": "Gambar-System/MGPS.webp",
+                // "Lift": "Gambar-System/lift.webp",
+                // "Air Handling Unit": "Gambar-System/AHU.webp",
+                // "BAS System": "Gambar-System/BAS.webp",
+                // "Chiller And Cooling Tower": "Gambar-System/CHILLER.webp", 
+                // "Fire Protection System": "Gambar-System/FPS.webp"
             };
 
           // From line 505 to 521, the script are added to the original scripts, while for line 523, the function is changed a bit. The reason is so that, for JLB, only 8 critical systems show up instead of 10
