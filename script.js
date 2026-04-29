@@ -545,7 +545,7 @@ async function setupHospitalPage() {
           // Replace that entire loop with this conditional logic:
 
           // Check if current hospital is JLB and filter out specific systems
-           let systemsToShow = criticalSystems;
+          // let systemsToShow = criticalSystems;
 
           // if (hospitalId === 'JLB-JELEBU') {
           //   // Remove LIFT and AIR HANDLING UNIT (and any others you don't want)
@@ -562,7 +562,7 @@ async function setupHospitalPage() {
 // REPLACE the system card generation section inside setupHospitalPage function (lines ~505-521)
 // Find this section and replace the systemsToShow.forEach loop with:
 
-systemsToShow.forEach(system => {
+criticalSystems.forEach(system => {
     const card = document.createElement('a');
     card.className = 'system-card'; 
     card.href = `hospital-page.html?hosp=${hospitalId}&sys=${system.id}`;
