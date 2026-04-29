@@ -500,7 +500,7 @@ async function setupHospitalPage() {
         if (backButton) {
             backButton.style.display = 'none';
         }
-        headerTitle.textContent = `Type of Critical System - ${currentHospital ? currentHospital.name : hospitalId}`;
+        headerTitle.textContent = `Type of Vehicles - ${currentHospital ? currentHospital.name : hospitalId}`;
         // Jangan hapuskan kandungan utama HTML hospital-page.html jika ia mengandungi struktur menu, 
         // tetapi kita akan ganti dengan grid yang dijana JS jika dataSheets ada.
 
@@ -545,7 +545,7 @@ async function setupHospitalPage() {
           // Replace that entire loop with this conditional logic:
 
           // Check if current hospital is JLB and filter out specific systems
-          // let systemsToShow = criticalSystems;
+           let systemsToShow = criticalSystems;
 
           // if (hospitalId === 'JLB-JELEBU') {
           //   // Remove LIFT and AIR HANDLING UNIT (and any others you don't want)
