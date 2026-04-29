@@ -347,7 +347,8 @@ body {
 
 /* Add these new JPJ status styles */
 .status-JPJ-PASS {
-    background-color: #0000FF;
+    //background-color: #0000FF;
+    background-color: #1616FF;
     color: #000000 !important;
 }
 
