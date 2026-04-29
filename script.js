@@ -379,7 +379,28 @@ const submissionForms = {
     'PGD-PASIR-GUDANG_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/PGD.html',
 };
 
+// Add this function to count JPJ Pass/Fail from data
+function countJPJStatus(data) {
+    let passCount = 0;
+    let failCount = 0;
+    
+    data.forEach(item => {
+        const jpjStatus = item['JPJ'] ? item['JPJ'].trim().toUpperCase() : '';
+        if (jpjStatus === 'PASS') {
+            passCount++;
+        } else if (jpjStatus === 'FAIL') {
+            failCount++;
+        }
+    });
+    
+    return { passCount, failCount };
+}
+
+
+
+
 // Fungsi untuk mengemas kini kad hospital sedia ada di halaman utama
+// But the existing updateHospitalCards function is replaced with this:
 function updateHospitalCards() {
     const fetchPromises = [];
     const loadingSpinner = document.getElementById('loading-spinner');
@@ -389,7 +410,6 @@ function updateHospitalCards() {
     }
 
     hospitalData.forEach(hospital => {
-        // Cari elemen kad yang sedia ada
         const cardElement = document.getElementById(`card-${hospital.id}`);
         if (cardElement && hospital.sheetsUrl) {
             const fetchPromise = fetch(hospital.sheetsUrl)
@@ -402,16 +422,27 @@ function updateHospitalCards() {
                 .then(data => {
                     const functioningCount = data.filter(item => item.Status && item.Status.trim().toUpperCase() === 'FUNCTIONING').length;
                     const notFunctioningCount = data.filter(item => item.Status && item.Status.trim().toUpperCase() === 'NOT FUNCTIONING').length;
+                    
+                    // Add JPJ counts
+                    const { passCount, failCount } = countJPJStatus(data);
 
-                    // Cari span dalam kad dan kemas kini nilainya
+                    // Update the card spans
                     const functioningSpan = cardElement.querySelector('.status-FUNCTIONING');
                     const notFunctioningSpan = cardElement.querySelector('.status-NOT-FUNCTIONING');
+                    const jpjPassSpan = cardElement.querySelector('.status-JPJ-PASS');
+                    const jpjFailSpan = cardElement.querySelector('.status-JPJ-FAIL');
 
                     if (functioningSpan) {
                         functioningSpan.textContent = `FUNCTIONING: ${functioningCount}`;
                     }
                     if (notFunctioningSpan) {
                         notFunctioningSpan.textContent = `NOT FUNCTIONING: ${notFunctioningCount}`;
+                    }
+                    if (jpjPassSpan) {
+                        jpjPassSpan.textContent = `JPJ PASS: ${passCount}`;
+                    }
+                    if (jpjFailSpan) {
+                        jpjFailSpan.textContent = `JPJ FAIL: ${failCount}`;
                     }
                 })
                 .catch(error => {
@@ -423,10 +454,10 @@ function updateHospitalCards() {
                 });
             fetchPromises.push(fetchPromise);
         } else if (cardElement) {
-             const statusContainer = cardElement.querySelector('.status-container');
-             if (statusContainer) {
-                 statusContainer.innerHTML = '<p style="color:red; font-size: 0.8em; margin: 0; padding: 0;">No URL API provided</p>';
-             }
+            const statusContainer = cardElement.querySelector('.status-container');
+            if (statusContainer) {
+                statusContainer.innerHTML = '<p style="color:red; font-size: 0.8em; margin: 0; padding: 0;">No URL API provided</p>';
+            }
         }
     });
 
@@ -436,6 +467,7 @@ function updateHospitalCards() {
         }
     });
 }
+
 
 // Fungsi untuk mengambil data dari Google Sheets API
 async function fetchAssetData(sheetsUrl, systemId) {
@@ -520,56 +552,81 @@ async function setupHospitalPage() {
             });
           }
 
-            systemsToShow.forEach(system => {
-                const card = document.createElement('a');
-                card.className = 'system-card'; 
-                card.href = `hospital-page.html?hosp=${hospitalId}&sys=${system.id}`;
+            // REPLACE the system card generation section inside setupHospitalPage function (lines ~505-521)
+// Find this section and replace the systemsToShow.forEach loop with:
 
-                // --- START: TAMBAH OVERLAY ---
-                const overlay = document.createElement('div');
-                overlay.className = 'card-overlay';
-                card.appendChild(overlay);
-                // --- END: TAMBAH OVERLAY ---
+// REPLACE the system card generation section inside setupHospitalPage function (lines ~505-521)
+// Find this section and replace the systemsToShow.forEach loop with:
 
-                // KOD GAMBAR
-                const img = document.createElement('img');
-                const imageSrc = systemImageMap[system.id] || "Gambar/default.webp"; 
-                img.src = imageSrc;
-                img.alt = system.name;
-                img.className = 'card-image';
-                card.appendChild(img);
+systemsToShow.forEach(system => {
+    const card = document.createElement('a');
+    card.className = 'system-card'; 
+    card.href = `hospital-page.html?hosp=${hospitalId}&sys=${system.id}`;
 
-                // 3. TAMBAH TAJUK (z-index: 2)
-                const systemName = document.createElement('span');
-                systemName.className = 'card-title';
-                systemName.textContent = system.name;
-                card.appendChild(systemName);
-                
-                // Kira status untuk sistem ini dari data yang telah diambil
-                const systemData = allData.filter(item => (item['Type of System'] || '').trim().toUpperCase() === (system.id || '').trim().toUpperCase());
-                const functioningCount = systemData.filter(item => (item.Status || '').trim().toUpperCase() === 'FUNCTIONING').length;
-                const notFunctioningCount = systemData.filter(item => (item.Status || '').trim().toUpperCase() === 'NOT FUNCTIONING').length;
+    const overlay = document.createElement('div');
+    overlay.className = 'card-overlay';
+    card.appendChild(overlay);
 
-                // Tambah status ke kad
-                const statusContainer = document.createElement('div');
-                statusContainer.className = 'status-container'; 
+    const img = document.createElement('img');
+    const imageSrc = systemImageMap[system.id] || "Gambar/default.webp"; 
+    img.src = imageSrc;
+    img.alt = system.name;
+    img.className = 'card-image';
+    card.appendChild(img);
 
-                const spanF = document.createElement('span');
-                spanF.className = 'status-box status-FUNCTIONING';
-                spanF.textContent = `FUNCTIONING: ${functioningCount}`;
+    const systemName = document.createElement('span');
+    systemName.className = 'card-title';
+    systemName.textContent = system.name;
+    card.appendChild(systemName);
+    
+    // Calculate status for this system including JPJ
+    const systemData = allData.filter(item => (item['Type of System'] || '').trim().toUpperCase() === (system.id || '').trim().toUpperCase());
+    const functioningCount = systemData.filter(item => (item.Status || '').trim().toUpperCase() === 'FUNCTIONING').length;
+    const notFunctioningCount = systemData.filter(item => (item.Status || '').trim().toUpperCase() === 'NOT FUNCTIONING').length;
+    
+    // Add JPJ counts for this system
+    let passCount = 0;
+    let failCount = 0;
+    systemData.forEach(item => {
+        const jpjStatus = item['JPJ'] ? item['JPJ'].trim().toUpperCase() : '';
+        if (jpjStatus === 'PASS') {
+            passCount++;
+        } else if (jpjStatus === 'FAIL') {
+            failCount++;
+        }
+    });
 
-                const spanNF = document.createElement('span');
-                spanNF.className = 'status-box status-NOT-FUNCTIONING';
-                spanNF.textContent = `NOT FUNCTIONING: ${notFunctioningCount}`;
+    // Create status container with 4 status boxes
+    const statusContainer = document.createElement('div');
+    statusContainer.className = 'status-container'; 
 
-                statusContainer.appendChild(spanF);
-                statusContainer.appendChild(spanNF);
-                
-                card.appendChild(statusContainer);
-                
-                cardGrid.appendChild(card);
-            });
-            mainContent.appendChild(cardGrid);
+    const spanF = document.createElement('span');
+    spanF.className = 'status-box status-FUNCTIONING';
+    spanF.textContent = `FUNCTIONING: ${functioningCount}`;
+
+    const spanNF = document.createElement('span');
+    spanNF.className = 'status-box status-NOT-FUNCTIONING';
+    spanNF.textContent = `NOT FUNCTIONING: ${notFunctioningCount}`;
+    
+    const spanJPJPass = document.createElement('span');
+    spanJPJPass.className = 'status-box status-JPJ-PASS';
+    spanJPJPass.textContent = `JPJ PASS: ${passCount}`;
+    
+    const spanJPJFail = document.createElement('span');
+    spanJPJFail.className = 'status-box status-JPJ-FAIL';
+    spanJPJFail.textContent = `JPJ FAIL: ${failCount}`;
+
+    statusContainer.appendChild(spanF);
+    statusContainer.appendChild(spanNF);
+    statusContainer.appendChild(spanJPJPass);
+    statusContainer.appendChild(spanJPJFail);
+    
+    card.appendChild(statusContainer);
+    
+    cardGrid.appendChild(card);
+    });
+          
+          mainContent.appendChild(cardGrid);
 
         } catch (error) {
             console.error("Fetch error:", error);
@@ -676,17 +733,31 @@ async function setupHospitalPage() {
                     formattedDate = 'N/A';
                 }
 
-                const card = document.createElement('div');
-                card.className = 'asset-card';
-                card.innerHTML = `
-                    <h3>${item['Asset']}</h3>
-                    <p><strong>Status:</strong> <span class="status-box ${statusClass}">${item['Status']}</span></p>
-                    <p><strong>Remark:</strong> ${item['Remark']}</p>
-                    <p><strong>Action:</strong> ${item['Action']}</p>
-                    <p class="last-update">Last Update: ${formattedDate}</p>
-                `;
-                cardGrid.appendChild(card);
-            });
+                // REPLACE the asset card generation section (where each subsystem block is created)
+// Find this section and replace the card.innerHTML with:
+
+                      const card = document.createElement('div');
+                      card.className = 'asset-card';
+                      
+                      // Get JPJ status for display
+                      const jpjStatus = item['JPJ'] ? item['JPJ'] : 'N/A';
+                      let jpjClass = '';
+                      const jpjUpper = jpjStatus.trim().toUpperCase();
+                      if (jpjUpper === 'PASS') {
+                          jpjClass = 'status-JPJ-PASS';
+                      } else if (jpjUpper === 'FAIL') {
+                          jpjClass = 'status-JPJ-FAIL';
+                      }
+                      
+                      card.innerHTML = `
+                          <h3>${item['Asset']}</h3>
+                          <p><strong>Status:</strong> <span class="status-box ${statusClass}">${item['Status'] || 'N/A'}</span></p>
+                          <p><strong>JPJ:</strong> <span class="status-box ${jpjClass}">${jpjStatus}</span></p>
+                          <p><strong>Remark:</strong> ${item['Remark'] || ''}</p>
+                          <p><strong>Action:</strong> ${item['Action'] || ''}</p>
+                          <p class="last-update">Last Update: ${formattedDate}</p>
+                      `;
+                      cardGrid.appendChild(card);            });
 
             locationSection.appendChild(cardGrid);
             mainContent.appendChild(locationSection);
