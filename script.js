@@ -523,7 +523,7 @@ async function setupHospitalPage() {
             // --- PETA LALUAN GAMBAR (MAP) ---
             const systemImageMap = {
               "AMBULANCE": "Gambar-System/ambulance.webp", 
-              "NON AMBULANCE": "Gambar-System/non-ambulance.webp", 
+              "NON AMBULANCE": "Gambar-System/non-ambulance.webp"
                 // "Electrical Supply": "Gambar-System/ElectricalSupply.webp",
                 // "Electrical Supply": "Gambar-System/ElectricalSupply.webp",
                 // "Generator Set": "Gambar-System/genset.webp", 
@@ -545,7 +545,7 @@ async function setupHospitalPage() {
           // Replace that entire loop with this conditional logic:
 
           // Check if current hospital is JLB and filter out specific systems
-          let systemsToShow = criticalSystems;
+          // let systemsToShow = criticalSystems;
 
           // if (hospitalId === 'JLB-JELEBU') {
           //   // Remove LIFT and AIR HANDLING UNIT (and any others you don't want)
