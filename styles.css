@@ -332,6 +332,17 @@ body {
     background-color: #ff0000;
 }
 
+/* Add these new JPJ status styles */
+.status-JPJ-PASS {
+    background-color: #ffaa00;
+    color: #000000 !important;
+}
+
+.status-JPJ-FAIL {
+    background-color: #ff6600;
+    color: #000000 !important;
+}
+
 /* Gaya untuk Status Container di halaman utama */
 .status-container {
     display: flex;
