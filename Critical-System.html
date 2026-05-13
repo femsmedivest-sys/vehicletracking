@@ -748,7 +748,7 @@
             function populateDropdown(data) {
                 const select = document.getElementById('hospitalSelect');
                 if (!select) return;
-                select.innerHTML = '<option value="ALL">🏥 -- All Hospitals (${data.length} total) --</option>';
+                select.innerHTML = '<option value="ALL">🏥 -- All Hospitals --</option>';
                 data.forEach(h => {
                     const option = document.createElement('option');
                     option.value = h.hospital;
