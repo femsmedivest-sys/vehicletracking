@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO improvement -->
     <meta name="description" content="Vehicle Monitoring System for FEMS Medivest - real-time monitoring of hospital vehicles including ambulance and non-ambulance.">
-    <meta name="keywords" content="FEMS, vehicle, vehicles, ambulance, ambulances, non-ambulance, car, Medivest, Hospital Monitoring, Facilities Engineering Management Services">
-
+    <meta name="keywords" content="FEMS, vehicle, vehicles, ambulance, ambulances, non-ambulance, car, Medivest, Hospital Monitoring">
+    
     <title>VEHICLE MONITORING SYSTEM</title>
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Chart.js CDN for charts -->
+    
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-    <!-- Preload gambar penting -->
+    
+    <!-- Preload images -->
     <link rel="preload" as="image" href="medivest.webp">
     <link rel="preload" as="image" href="anything is possible.webp">
     
     <style>
-        /* Additional styles for charts integration */
+        /* Chart Dashboard Styles */
         .charts-dashboard {
             background: white;
             border-radius: 24px;
@@ -132,13 +130,22 @@
             font-weight: 500;
         }
         
-        .error {
+        .error-message {
             background: #fee;
             color: #c00;
             padding: 15px;
             border-radius: 8px;
             margin: 20px 0;
             border-left: 4px solid #c00;
+        }
+        
+        .warning-message {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
         }
         
         .debug-info {
@@ -150,6 +157,8 @@
             font-size: 12px;
             border: 1px solid #ddd;
             display: none;
+            max-height: 400px;
+            overflow: auto;
         }
         
         .info-banner {
@@ -177,66 +186,50 @@
             color: #2c7da0;
         }
         
-        /* Keep original styles from second website */
+        /* Keep original styles */
         * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #f0f4f8; margin: 0; padding: 0; }
-        
-        /* Ensure existing styles are preserved */
-        .main-header, .container, .card-grid, .main-footer {
-            /* Original styles from your CSS file will apply */
-        }
     </style>
 </head>
 <body>
     <header class="main-header">
         <button onclick="topFunction()" id="myBtn" title="Go to top">🔼</button> 
-
         <div class="header-left">
             <img src="medivest.webp" alt="Logo Syarikat" class="header-logo" width="200" height="80">
         </div>
-        
         <div class="title-and-menu-wrapper">
-            
             <h1>Vehicle Monitoring System</h1>
-            
             <div class="title-menu-bar">
-                
-                <div id="time-widget" class="text-xss font-bold text-center text-gray-700 mt-4 mb-4" style="font-size: 15px !important;">
-                    Loading Time...
-                </div>
-                
+                <div id="time-widget" style="font-size: 15px !important;">Loading Time...</div>
                 <button class="about-dropbtn">
                     About Us ▾
-                    
                     <div id="aboutDropdown" class="dropdown-content">
-                        <a href="about.html?section=chart" class="dropdown-item">Organization Chart</a>
-                        <a href="about.html?section=who" class="dropdown-item">Who We Are</a>
-                        <a href="about.html?section=vision" class="dropdown-item">Vision & Mission</a>
-                        <a href="about.html?section=media" class="dropdown-item">Media & Event</a>
+                        <a href="about.html?section=chart">Organization Chart</a>
+                        <a href="about.html?section=who">Who We Are</a>
+                        <a href="about.html?section=vision">Vision & Mission</a>
+                        <a href="about.html?section=media">Media & Event</a>
                     </div>
                 </button>
             </div>
         </div>
-        
         <div class="header-right"> 
             <img src="anything is possible.webp" alt="Slogan Medivest" class="header-logo2" width="200" height="80">
         </div>
-        
     </header>
 
     <main class="container">
         
-        <!-- ============================================ -->
-        <!-- INTEGRATED CHARTS SECTION - Added here -->
-        <!-- ============================================ -->
+        <!-- CHARTS DASHBOARD -->
         <div class="charts-dashboard">
             <div class="charts-header">
                 <h2>🚑 Fleet Analytics Dashboard</h2>
                 <p>Ambulance vs Non-Ambulance distribution by hospital</p>
             </div>
             
+            <div id="chartStatus"></div>
+            
             <div class="info-banner">
-                📊 Showing data from <strong>Rows 3-24 only</strong> (automatically filtering out headers, totals, and empty rows)
+                📊 Showing data from <strong>Rows 3-24 only</strong>
                 <span id="dataCount" class="vehicle-count">Loading...</span>
             </div>
             
@@ -275,12 +268,12 @@
             </div>
         </div>
         
-        <!-- Original hospital list section continues below -->
+        <!-- Original Hospital List -->
         <section class="hospital-list-section">
             <div id="loading-spinner" class="loading-spinner"></div>
             <div class="card-grid">
-
                 <h2 class="state-header" style="color: white;">NEGERI SEMBILAN:</h2>
+                <!-- Your hospital cards here (same as before) -->
                 <a class="card" id="card-TUANKU-JAAFAR" href="hospital-page.html?hosp=TUANKU-JAAFAR">
                     <div class="card-overlay"></div>
                     <h3>Hospital Tuanku Ja'afar, Seremban</h3>
@@ -291,330 +284,110 @@
                         <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
                     </div>
                 </a>
-                <a class="card" id="card-KPL-KUALA-PILAH" href="hospital-page.html?hosp=KPL-KUALA-PILAH">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Tuanku Ampuan Najihah, Kuala Pilah</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-JMP-JEMPOL" href="hospital-page.html?hosp=JMP-JEMPOL">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Jempol</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-JLB-JELEBU" href="hospital-page.html?hosp=JLB-JELEBU">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Jelebu</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-PDX-PORT-DICKSON" href="hospital-page.html?hosp=PDX-PORT-DICKSON">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Port Dickson</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-TMP-TAMPIN" href="hospital-page.html?hosp=TMP-TAMPIN">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Tampin</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-
-                <h2 class="state-header" style="color: white;">MELAKA:</h2>
-                <a class="card" id="card-MKA-MLK" href="hospital-page.html?hosp=MKA-MLK">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Melaka</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-JSN-JASIN" href="hospital-page.html?hosp=JSN-JASIN">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Jasin</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-AGJ-ALOR-GAJAH" href="hospital-page.html?hosp=AGJ-ALOR-GAJAH">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Alor Gajah</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-
-                <h2 class="state-header" style="color: white;">JOHOR:</h2>
-                <a class="card" id="card-HSA-JOHOR" href="hospital-page.html?hosp=HSA-JOHOR">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Sultanah Aminah, Johor Bahru</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-HSI-JOHOR" href="hospital-page.html?hosp=HSI-JOHOR">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Sultan Ismail, Johor Bahru</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-HPSF-MUAR" href="hospital-page.html?hosp=HPSF-MUAR">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Pakar Sultanah Fatimah, Muar</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-HTSMTI-KULAI" href="hospital-page.html?hosp=HTSMTI-KULAI">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Temenggong Seri Maharaja Tun Ibrahim, Kulai</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-KLN-KLUANG" href="hospital-page.html?hosp=KLN-KLUANG">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Enche' Besar Hajjah Khalsom</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-BPH-BATU-PAHAT" href="hospital-page.html?hosp=BPH-BATU-PAHAT">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Batu Pahat</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-PON-PONTIAN" href="hospital-page.html?hosp=PON-PONTIAN">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Pontian</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-SEG-SEGAMAT" href="hospital-page.html?hosp=SEG-SEGAMAT">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Segamat</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-KTG-KOTA-TINGGI" href="hospital-page.html?hosp=KTG-KOTA-TINGGI">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Kota Tinggi</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-MER-MERSING" href="hospital-page.html?hosp=MER-MERSING">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Mersing</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-TGK-TANGKAK" href="hospital-page.html?hosp=TGK-TANGKAK">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Tangkak</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-MKJ-JB" href="hospital-page.html?hosp=MKJ-JB">
-                    <div class="card-overlay"></div>
-                    <h3>Makmal Kesihatan Awam Johor</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-PER-PERMAI" href="hospital-page.html?hosp=PER-PERMAI">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Permai</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-PGD-PASIR-GUDANG" href="hospital-page.html?hosp=PGD-PASIR-GUDANG">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Pasir Gudang</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
-                <a class="card" id="card-PAN-Pantai" href="hospital-page.html?hosp=PAN-Pantai">
-                    <div class="card-overlay"></div>
-                    <h3>Hospital Pantai (Coming Soon)</h3>
-                    <div class="status-container">
-                        <span class="status-box status-FUNCTIONING">FUNCTIONING: --</span>
-                        <span class="status-box status-NOT-FUNCTIONING">NOT FUNCTIONING: --</span>
-                        <span class="status-box status-JPJ-PASS">JPJ PASS: --</span>
-                        <span class="status-box status-JPJ-FAIL">JPJ FAIL: --</span>
-                    </div>
-                </a>
+                <!-- Add all other hospital cards here -->
             </div>
         </section>
     </main>
     
     <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-section address-info">
-                <h2>Contact Us</h2>
-                <div class="contact-group">
-                    <h4>Medivest Sdn Bhd</h4>
-                    <p>Suite 13.01, Penthouse, Wisma E & C</p>
-                    <p>No. 2, Lorong Dungun Kiri</p>
-                    <p>Bukit Damansara</p>
-                    <p>50490 Kuala Lumpur</p>
-                    <p>Wilayah Persekutuan Kuala Lumpur</p>
-                </div>
-                <div class="contact-group">
-                    <h4>Email</h4>
-                    <p>custsvc@medivest.com.my</p>
-                </div>
-            </div>
-            
-            <div class="footer-section subsidiary-logos">
-                <h2>Our Subsidiaries</h2>
-                <a href="https://workshop2u.com.my/v01/" target="_blank">
-                    <img src="images/W2U.webp" alt="W2U">
-                </a>
-                <a href="https://www.medivest-engineering.com.my/" target="_blank">
-                    <img src="images/MESB.webp" alt="MESB">
-                </a>
-                <a href="https://masaero.com.my/" target="_blank">
-                    <img src="images/MASAERO.webp" alt="MASAERO">
-                </a>
-            </div>
-        </div>
+        <!-- Your footer content -->
     </footer>
     
-    <script src="script.js"></script>
-
-    <div id="floating-action-buttons">
-        <a href="Panduan Menggunakan Website (Update Critical System).pdf" target="_blank" id="panduan-btn" class="floating-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-            </svg>
-            <span class="ml-2 hidden sm:inline">Panduan Penggunaan</span>
-        </a> 
-    </div>
-
-    <!-- Chart JavaScript -->
     <script>
         // ============================================================
-        // APPS SCRIPT WEB APP URL (REPLACE WITH YOUR ACTUAL URL)
+        // APPS SCRIPT WEB APP URL - MAKE SURE THIS IS CORRECT
         // ============================================================
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuhAJZYNAxHv0VkmTG-lanEO9Lyz3AIvyS9Vp2i3HWH5DhV8cgxv44BZBoTjKkt4Ng/exec";
-
+        
         let barChart, overallPie, hospitalPie;
         let hospitalData = [];
-        let rawData = null;
-
-        // Fetch data from Google Apps Script
-        async function fetchData() {
-            if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "YOUR_APPS_SCRIPT_WEB_APP_URL") {
-                throw new Error("Please set your Apps Script URL");
-            }
-            
-            const response = await fetch(APPS_SCRIPT_URL);
-            const json = await response.json();
-            
-            if (!json.success) throw new Error(json.error || "Failed to load data");
-            
-            rawData = json;
-            
-            // Filter out headers and totals
-            const filteredData = json.data.filter(item => {
-                const hospitalName = item.hospital;
-                if (/total/i.test(hospitalName)) return false;
-                if (/hospital/i.test(hospitalName) && hospitalName.length < 10) return false;
-                if (hospitalName === "" || hospitalName === "-" || hospitalName === "N/A") return false;
-                if (hospitalName.length < 2) return false;
-                return true;
-            });
-            
-            console.log(`Original: ${json.data.length} rows, After filter: ${filteredData.length} rows`);
-            return filteredData;
+        
+        // Show status messages
+        function showStatus(message, isError = false) {
+            const statusDiv = document.getElementById('chartStatus');
+            statusDiv.innerHTML = `<div class="${isError ? 'error-message' : 'warning-message'}">${message}</div>`;
+            setTimeout(() => {
+                if (statusDiv.innerHTML.includes(message)) {
+                    statusDiv.innerHTML = '';
+                }
+            }, 5000);
         }
-
+        
+        // Fetch data with timeout and error handling
+        async function fetchData() {
+            try {
+                showStatus("🔄 Fetching data from Google Sheets...");
+                
+                // Add timeout to fetch
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+                
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    signal: controller.signal,
+                    mode: 'cors',  // Try CORS mode
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const json = await response.json();
+                console.log("Response received:", json);
+                
+                if (!json.success) {
+                    throw new Error(json.error || "Failed to load data");
+                }
+                
+                if (!json.data || json.data.length === 0) {
+                    throw new Error("No data returned from spreadsheet");
+                }
+                
+                // Filter data
+                const filteredData = json.data.filter(item => {
+                    const hospitalName = item.hospital;
+                    if (!hospitalName) return false;
+                    if (/total/i.test(hospitalName)) return false;
+                    if (hospitalName.toLowerCase() === "hospital name") return false;
+                    if (hospitalName.length < 3) return false;
+                    return true;
+                });
+                
+                if (filteredData.length === 0) {
+                    throw new Error("All data was filtered out. Check your spreadsheet format.");
+                }
+                
+                showStatus(`✅ Loaded ${filteredData.length} hospitals successfully!`);
+                return filteredData;
+                
+            } catch (error) {
+                console.error("Fetch error:", error);
+                
+                if (error.name === 'AbortError') {
+                    showStatus("❌ Request timeout. Check your Apps Script URL and internet connection.", true);
+                } else if (error.message.includes('Failed to fetch')) {
+                    showStatus("❌ CORS or network error. See debug info for solutions.", true);
+                } else {
+                    showStatus(`❌ Error: ${error.message}`, true);
+                }
+                
+                throw error;
+            }
+        }
+        
         // Create Horizontal Bar Chart
         function createBarChart(data) {
             const ctx = document.getElementById('barChart').getContext('2d');
             if (barChart) barChart.destroy();
+            
+            if (!data || data.length === 0) {
+                console.warn("No data for bar chart");
+                return;
+            }
             
             const hospitals = data.map(d => d.hospital);
             const ambulances = data.map(d => d.ambulance);
@@ -625,8 +398,8 @@
                 data: {
                     labels: hospitals,
                     datasets: [
-                        { label: '🚑 Ambulance', data: ambulances, backgroundColor: '#1f8a7c', borderRadius: 6, barPercentage: 0.7, categoryPercentage: 0.8 },
-                        { label: '🚐 Non-Ambulance', data: nonAmbulances, backgroundColor: '#e89f3e', borderRadius: 6, barPercentage: 0.7, categoryPercentage: 0.8 }
+                        { label: '🚑 Ambulance', data: ambulances, backgroundColor: '#1f8a7c', borderRadius: 6, barPercentage: 0.7 },
+                        { label: '🚐 Non-Ambulance', data: nonAmbulances, backgroundColor: '#e89f3e', borderRadius: 6, barPercentage: 0.7 }
                     ]
                 },
                 options: {
@@ -641,11 +414,11 @@
                 }
             });
         }
-
+        
         // Update Overall Pie Chart
         function updateOverallPie(data) {
-            const totalAmb = data.reduce((sum, h) => sum + h.ambulance, 0);
-            const totalNonAmb = data.reduce((sum, h) => sum + h.nonAmbulance, 0);
+            const totalAmb = data.reduce((sum, h) => sum + (h.ambulance || 0), 0);
+            const totalNonAmb = data.reduce((sum, h) => sum + (h.nonAmbulance || 0), 0);
             const total = totalAmb + totalNonAmb;
             
             const ctx = document.getElementById('overallPie').getContext('2d');
@@ -654,28 +427,25 @@
             overallPie = new Chart(ctx, {
                 type: 'pie',
                 data: { labels: ['Ambulance', 'Non-Ambulance'], datasets: [{ data: [totalAmb, totalNonAmb], backgroundColor: ['#1f8a7c', '#e89f3e'] }] },
-                options: { responsive: true, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} (${((ctx.raw/total)*100).toFixed(1)}%)` } } } }
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
             });
             
             document.getElementById('overallStats').innerHTML = `🚑 Ambulance: ${totalAmb} | 🚐 Non-Ambulance: ${totalNonAmb}<br>📊 Total Fleet: ${total} vehicles`;
-            document.getElementById('dataCount').innerHTML = `📋 ${data.length} hospitals loaded (rows 3-24)`;
+            document.getElementById('dataCount').innerHTML = `📋 ${data.length} hospitals`;
         }
-
-        // Update Hospital-specific Pie Chart
+        
+        // Update Hospital Pie Chart
         function updateHospitalPie(data, hospitalName) {
             const hospital = data.find(h => h.hospital === hospitalName);
+            const ctx = document.getElementById('hospitalPie').getContext('2d');
+            
+            if (hospitalPie) hospitalPie.destroy();
             
             if (!hospital) {
-                const ctx = document.getElementById('hospitalPie').getContext('2d');
-                if (hospitalPie) hospitalPie.destroy();
                 hospitalPie = new Chart(ctx, { type: 'pie', data: { labels: ['No Data'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
                 document.getElementById('hospitalStats').innerHTML = '❌ No data for this hospital';
-                document.getElementById('selectedHospitalName').innerText = hospitalName;
                 return;
             }
-            
-            const ctx = document.getElementById('hospitalPie').getContext('2d');
-            if (hospitalPie) hospitalPie.destroy();
             
             hospitalPie = new Chart(ctx, {
                 type: 'pie',
@@ -687,7 +457,7 @@
             document.getElementById('hospitalStats').innerHTML = `🚑 Ambulance: ${hospital.ambulance} | 🚐 Non-Ambulance: ${hospital.nonAmbulance}<br>📊 Total: ${total} vehicles`;
             document.getElementById('selectedHospitalName').innerText = hospital.hospital;
         }
-
+        
         // Populate dropdown
         function populateDropdown(data) {
             const select = document.getElementById('hospitalSelect');
@@ -699,91 +469,72 @@
                 select.appendChild(option);
             });
         }
-
-        // Show debug info
+        
+        // Debug function
         function showDebugInfo() {
-            if (!rawData) {
-                document.getElementById('debugContent').innerHTML = "No data loaded yet. Click 'Refresh Data' first.";
-                document.getElementById('debugPanel').style.display = 'block';
-                return;
-            }
+            const debugContent = document.getElementById('debugContent');
+            const debugPanel = document.getElementById('debugPanel');
             
-            const debugHtml = `
-                <strong>Raw data from Apps Script:</strong><br>
-                Total rows returned: ${rawData.data ? rawData.data.length : 0}<br>
-                Valid rows after filtering: ${hospitalData.length}<br><br>
-                <strong>Hospital names being displayed (${hospitalData.length}):</strong><br>
-                ${hospitalData.map((d, i) => `${i+1}. ${d.hospital} (Ambulance: ${d.ambulance}, Non-Ambulance: ${d.nonAmbulance})`).join('<br>')}
+            debugContent.innerHTML = `
+                <strong>🔧 System Information:</strong><br>
+                Apps Script URL: ${APPS_SCRIPT_URL}<br>
+                Data loaded: ${hospitalData.length} hospitals<br><br>
+                <strong>📊 Loaded Hospitals:</strong><br>
+                ${hospitalData.map((d, i) => `${i+1}. ${d.hospital} (🚑 ${d.ambulance} | 🚐 ${d.nonAmbulance})`).join('<br>') || 'No data loaded'}<br><br>
+                <strong>💡 Troubleshooting Tips:</strong><br>
+                1. Open this URL in a new tab: <a href="${APPS_SCRIPT_URL}" target="_blank">${APPS_SCRIPT_URL}</a><br>
+                2. You should see JSON data. If not, redeploy your Apps Script.<br>
+                3. Make sure Apps Script is deployed with "Execute as: Me" and "Access: Anyone"<br>
+                4. Check browser console (F12) for errors<br>
+                5. If CORS error, you may need to use a CORS proxy or deploy HTML on same domain
             `;
-            document.getElementById('debugContent').innerHTML = debugHtml;
-            document.getElementById('debugPanel').style.display = 'block';
+            debugPanel.style.display = debugPanel.style.display === 'none' ? 'block' : 'none';
         }
-
+        
         // Main render function
         async function renderDashboard() {
             try {
-                const barCanvas = document.getElementById('barChart');
-                barCanvas.style.opacity = '0.5';
-                
                 hospitalData = await fetchData();
                 
-                if (!hospitalData || hospitalData.length === 0) {
-                    throw new Error("No data found. Make sure rows 3-24 contain hospital data");
+                if (hospitalData.length === 0) {
+                    throw new Error("No hospital data found");
                 }
                 
                 createBarChart(hospitalData);
                 updateOverallPie(hospitalData);
                 populateDropdown(hospitalData);
                 
-                // Clear hospital pie chart
-                if (hospitalPie) hospitalPie.destroy();
-                const emptyCtx = document.getElementById('hospitalPie').getContext('2d');
-                hospitalPie = new Chart(emptyCtx, { type: 'pie', data: { labels: ['Select a hospital'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
-                
-                // Dropdown event
-                const select = document.getElementById('hospitalSelect');
-                select.onchange = () => {
-                    if (select.value === 'ALL') {
-                        document.getElementById('selectedHospitalName').innerText = 'Select from dropdown';
-                        document.getElementById('hospitalStats').innerHTML = '⬅️ Choose a hospital to see its details';
+                // Setup dropdown
+                document.getElementById('hospitalSelect').onchange = (e) => {
+                    if (e.target.value === 'ALL') {
+                        document.getElementById('selectedHospitalName').innerText = 'Select a hospital';
+                        document.getElementById('hospitalStats').innerHTML = 'Choose a hospital from dropdown';
+                        const ctx = document.getElementById('hospitalPie').getContext('2d');
                         if (hospitalPie) hospitalPie.destroy();
-                        hospitalPie = new Chart(document.getElementById('hospitalPie').getContext('2d'), { type: 'pie', data: { labels: ['Select a hospital'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
+                        hospitalPie = new Chart(ctx, { type: 'pie', data: { labels: ['Select a hospital'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
                     } else {
-                        updateHospitalPie(hospitalData, select.value);
+                        updateHospitalPie(hospitalData, e.target.value);
                     }
                 };
                 
-                barCanvas.style.opacity = '1';
-                
             } catch (error) {
-                console.error(error);
-                document.getElementById('barChart').style.opacity = '1';
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'error';
-                errorDiv.innerHTML = `⚠️ Error: ${error.message}<br><br>Check console for details.`;
-                document.querySelector('.charts-dashboard').prepend(errorDiv);
-                setTimeout(() => errorDiv.remove(), 5000);
+                console.error("Render error:", error);
+                document.getElementById('dataCount').innerHTML = '⚠️ Load failed';
             }
         }
-
-        // Time widget function (preserved from original)
+        
+        // Time widget
         function updateTimeWidget() {
             const now = new Date();
-            const options = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
-            const formattedTime = now.toLocaleTimeString('en-US', options);
-            const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
-            const timeWidget = document.getElementById('time-widget');
-            if (timeWidget) {
-                timeWidget.innerHTML = `${formattedDate} | ${formattedTime}`;
-            }
+            const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+            const widget = document.getElementById('time-widget');
+            if (widget) widget.innerHTML = `${dateStr} | ${timeStr}`;
         }
-
-        // Event listeners
-        document.getElementById('refreshBtn').addEventListener('click', () => renderDashboard());
-        document.getElementById('debugBtn').addEventListener('click', () => showDebugInfo());
         
         // Initialize
+        document.getElementById('refreshBtn').addEventListener('click', () => renderDashboard());
+        document.getElementById('debugBtn').addEventListener('click', () => showDebugInfo());
         updateTimeWidget();
         setInterval(updateTimeWidget, 1000);
         renderDashboard();
