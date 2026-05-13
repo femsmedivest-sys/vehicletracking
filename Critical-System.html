@@ -11,8 +11,8 @@
     <title>VEHICLE MONITORING SYSTEM</title>
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Chart.js CDN for charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Chart.js CDN - load async so it doesn't block rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" async></script>
 
     <!-- Preload gambar penting -->
     <link rel="preload" as="image" href="medivest.webp">
@@ -152,6 +152,17 @@
             margin: 20px 0;
             border-left: 4px solid #c00;
         }
+        /* Loading placeholder for charts */
+        .chart-loading {
+            text-align: center;
+            padding: 40px;
+            color: #2c7da0;
+            font-size: 14px;
+        }
+        .chart-container {
+            position: relative;
+            min-height: 300px;
+        }
     </style>
 </head>
 <body>
@@ -194,7 +205,7 @@
     <main class="container">
 
         <!-- ============================================= -->
-        <!-- CHARTS SECTION - ADDED WITHOUT MODIFYING ANYTHING ELSE -->
+        <!-- CHARTS SECTION - OPTIMIZED FOR FAST LOADING -->
         <!-- ============================================= -->
         <div class="charts-dashboard">
             <div class="charts-header">
@@ -205,20 +216,22 @@
             <div id="chartStatus"></div>
             
             <div class="info-banner">
-                📊 Showing data from <strong>Rows 3-24 only</strong>
-                <span id="dataCount" class="vehicle-count">Loading...</span>
+                📊 Loading fleet data... <span id="dataCount" class="vehicle-count">Please wait</span>
             </div>
             
             <div class="bar-chart-container">
                 <h3>📊 Hospital Comparison (Horizontal Bar Chart)</h3>
-                <canvas id="barChart" width="800" height="500" style="width:100%; max-height:600px;"></canvas>
+                <div id="barChartPlaceholder" class="chart-loading">
+                    ⏳ Loading chart data from Google Sheets...
+                </div>
+                <canvas id="barChart" width="800" height="500" style="width:100%; max-height:600px; display:none;"></canvas>
             </div>
             
             <div class="pie-section">
                 <div class="selector">
                     <label><strong>🏥 Select Hospital: </strong></label>
-                    <select id="hospitalSelect">
-                        <option value="ALL">-- All Hospitals (Global View) --</option>
+                    <select id="hospitalSelect" disabled>
+                        <option value="ALL">-- Loading hospitals --</option>
                     </select>
                     <button class="refresh-btn" id="refreshBtn">⟳ Refresh Data</button>
                     <button class="debug-btn" id="debugBtn">🐛 Show Debug Info</button>
@@ -227,13 +240,19 @@
                 <div class="pie-flex">
                     <div class="pie-card">
                         <h3>🌍 All Hospitals Combined</h3>
-                        <canvas id="overallPie" width="300" height="300"></canvas>
-                        <div class="stats" id="overallStats"></div>
+                        <div id="overallPiePlaceholder" class="chart-loading">
+                            ⏳ Loading...
+                        </div>
+                        <canvas id="overallPie" width="300" height="300" style="display:none;"></canvas>
+                        <div class="stats" id="overallStats">Waiting for data...</div>
                     </div>
                     <div class="pie-card">
                         <h3>🏥 <span id="selectedHospitalName">Select a hospital</span></h3>
-                        <canvas id="hospitalPie" width="300" height="300"></canvas>
-                        <div class="stats" id="hospitalStats"></div>
+                        <div id="hospitalPiePlaceholder" class="chart-loading">
+                            ⏳ Loading...
+                        </div>
+                        <canvas id="hospitalPie" width="300" height="300" style="display:none;"></canvas>
+                        <div class="stats" id="hospitalStats">Select a hospital from dropdown</div>
                     </div>
                 </div>
             </div>
@@ -578,190 +597,232 @@
             setInterval(updateTimeWidget, 1000);
         </script>
 
-        <!-- CHART JAVASCRIPT - ADDED WITHOUT MODIFYING YOUR EXISTING SCRIPTS -->
+        <!-- OPTIMIZED CHART JAVASCRIPT - Loads in background without blocking -->
         <script>
-        // Apps Script URL - UPDATE THIS WITH YOUR CORRECT URL
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuhAJZYNAxHv0VkmTG-lanEO9Lyz3AIvyS9Vp2i3HWH5DhV8cgxv44BZBoTjKkt4Ng/exec";
-        
-        let barChart, overallPie, hospitalPie;
-        let hospitalData = [];
-        
-        function showStatus(message, isError = false) {
-            const statusDiv = document.getElementById('chartStatus');
-            if (statusDiv) {
-                statusDiv.innerHTML = `<div class="${isError ? 'error-message' : 'warning-message'}" style="padding:10px;margin:10px 0;border-radius:8px;">${message}</div>`;
-                setTimeout(() => { if (statusDiv.innerHTML.includes(message)) statusDiv.innerHTML = ''; }, 5000);
-            }
-        }
-        
-        async function fetchData() {
-            try {
-                showStatus("🔄 Fetching data from Google Sheets...");
-                const response = await fetch(APPS_SCRIPT_URL);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const json = await response.json();
-                if (!json.success) throw new Error(json.error || "Failed to load data");
-                if (!json.data || json.data.length === 0) throw new Error("No data returned");
+        (function() {
+            // Apps Script URL - UPDATE THIS WITH YOUR CORRECT URL
+            const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuhAJZYNAxHv0VkmTG-lanEO9Lyz3AIvyS9Vp2i3HWH5DhV8cgxv44BZBoTjKkt4Ng/exec";
+            
+            let barChart, overallPie, hospitalPie;
+            let hospitalData = [];
+            let chartsReady = false;
+            
+            // Helper to show/hide loading states
+            function showCharts() {
+                const barCanvas = document.getElementById('barChart');
+                const overallCanvas = document.getElementById('overallPie');
+                const hospitalCanvas = document.getElementById('hospitalPie');
+                const barPlaceholder = document.getElementById('barChartPlaceholder');
+                const overallPlaceholder = document.getElementById('overallPiePlaceholder');
+                const hospitalPlaceholder = document.getElementById('hospitalPiePlaceholder');
                 
-                const filteredData = json.data.filter(item => {
-                    const name = item.hospital;
-                    if (!name) return false;
-                    if (/total/i.test(name)) return false;
-                    if (name.toLowerCase() === "hospital name") return false;
-                    if (name.length < 3) return false;
-                    return true;
+                if (barCanvas) barCanvas.style.display = 'block';
+                if (overallCanvas) overallCanvas.style.display = 'block';
+                if (hospitalCanvas) hospitalCanvas.style.display = 'block';
+                if (barPlaceholder) barPlaceholder.style.display = 'none';
+                if (overallPlaceholder) overallPlaceholder.style.display = 'none';
+                if (hospitalPlaceholder) hospitalPlaceholder.style.display = 'none';
+            }
+            
+            function showStatus(message, isError = false) {
+                const statusDiv = document.getElementById('chartStatus');
+                const countEl = document.getElementById('dataCount');
+                if (countEl && !isError) countEl.innerHTML = message;
+                if (statusDiv && isError) {
+                    statusDiv.innerHTML = `<div class="error-message" style="padding:10px;margin:10px 0;border-radius:8px;">${message}</div>`;
+                    setTimeout(() => { if (statusDiv.innerHTML.includes(message)) statusDiv.innerHTML = ''; }, 5000);
+                }
+            }
+            
+            async function fetchData() {
+                try {
+                    showStatus("Loading fleet data...");
+                    // Set a timeout of 10 seconds for the fetch
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000);
+                    
+                    const response = await fetch(APPS_SCRIPT_URL, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const json = await response.json();
+                    if (!json.success) throw new Error(json.error || "Failed to load data");
+                    if (!json.data || json.data.length === 0) throw new Error("No data returned");
+                    
+                    const filteredData = json.data.filter(item => {
+                        const name = item.hospital;
+                        if (!name) return false;
+                        if (/total/i.test(name)) return false;
+                        if (name.toLowerCase() === "hospital name") return false;
+                        if (name.length < 3) return false;
+                        return true;
+                    });
+                    
+                    showStatus(`${filteredData.length} hospitals loaded`);
+                    return filteredData;
+                } catch (error) {
+                    console.error("Chart fetch error:", error);
+                    if (error.name === 'AbortError') {
+                        showStatus("Timeout loading charts", true);
+                    } else {
+                        showStatus(`Chart error: ${error.message}`, true);
+                    }
+                    throw error;
+                }
+            }
+            
+            function createBarChart(data) {
+                const ctx = document.getElementById('barChart');
+                if (!ctx) return;
+                const context = ctx.getContext('2d');
+                if (barChart) barChart.destroy();
+                if (!data.length) return;
+                
+                barChart = new Chart(context, {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(d => d.hospital),
+                        datasets: [
+                            { label: '🚑 Ambulance', data: data.map(d => d.ambulance), backgroundColor: '#1f8a7c', borderRadius: 6 },
+                            { label: '🚐 Non-Ambulance', data: data.map(d => d.nonAmbulance), backgroundColor: '#e89f3e', borderRadius: 6 }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { position: 'top' } },
+                        scales: {
+                            x: { title: { display: true, text: 'Number of Vehicles' }, beginAtZero: true, ticks: { precision: 0 } },
+                            y: { title: { display: true, text: 'Hospital Name' }, ticks: { autoSkip: false, font: { size: 10 } } }
+                        }
+                    }
+                });
+            }
+            
+            function updateOverallPie(data) {
+                const totalAmb = data.reduce((s, h) => s + (h.ambulance || 0), 0);
+                const totalNon = data.reduce((s, h) => s + (h.nonAmbulance || 0), 0);
+                const ctx = document.getElementById('overallPie');
+                if (!ctx) return;
+                const context = ctx.getContext('2d');
+                if (overallPie) overallPie.destroy();
+                
+                overallPie = new Chart(context, {
+                    type: 'pie',
+                    data: { labels: ['Ambulance', 'Non-Ambulance'], datasets: [{ data: [totalAmb, totalNon], backgroundColor: ['#1f8a7c', '#e89f3e'] }] },
+                    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
                 });
                 
-                showStatus(`✅ Loaded ${filteredData.length} hospitals!`);
-                return filteredData;
-            } catch (error) {
-                console.error(error);
-                showStatus(`❌ Error: ${error.message}`, true);
-                throw error;
-            }
-        }
-        
-        function createBarChart(data) {
-            const ctx = document.getElementById('barChart');
-            if (!ctx) return;
-            const context = ctx.getContext('2d');
-            if (barChart) barChart.destroy();
-            if (!data.length) return;
-            
-            barChart = new Chart(context, {
-                type: 'bar',
-                data: {
-                    labels: data.map(d => d.hospital),
-                    datasets: [
-                        { label: '🚑 Ambulance', data: data.map(d => d.ambulance), backgroundColor: '#1f8a7c', borderRadius: 6 },
-                        { label: '🚐 Non-Ambulance', data: data.map(d => d.nonAmbulance), backgroundColor: '#e89f3e', borderRadius: 6 }
-                    ]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: { legend: { position: 'top' } },
-                    scales: {
-                        x: { title: { display: true, text: 'Number of Vehicles' }, beginAtZero: true, ticks: { precision: 0 } },
-                        y: { title: { display: true, text: 'Hospital Name' }, ticks: { autoSkip: false, font: { size: 10 } } }
-                    }
-                }
-            });
-        }
-        
-        function updateOverallPie(data) {
-            const totalAmb = data.reduce((s, h) => s + (h.ambulance || 0), 0);
-            const totalNon = data.reduce((s, h) => s + (h.nonAmbulance || 0), 0);
-            const ctx = document.getElementById('overallPie');
-            if (!ctx) return;
-            const context = ctx.getContext('2d');
-            if (overallPie) overallPie.destroy();
-            
-            overallPie = new Chart(context, {
-                type: 'pie',
-                data: { labels: ['Ambulance', 'Non-Ambulance'], datasets: [{ data: [totalAmb, totalNon], backgroundColor: ['#1f8a7c', '#e89f3e'] }] },
-                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
-            });
-            
-            const statsEl = document.getElementById('overallStats');
-            const countEl = document.getElementById('dataCount');
-            if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${totalAmb} | 🚐 Non-Ambulance: ${totalNon}<br>📊 Total: ${totalAmb + totalNon} vehicles`;
-            if (countEl) countEl.innerHTML = `📋 ${data.length} hospitals`;
-        }
-        
-        function updateHospitalPie(data, hospitalName) {
-            const hospital = data.find(h => h.hospital === hospitalName);
-            const ctx = document.getElementById('hospitalPie');
-            if (!ctx) return;
-            const context = ctx.getContext('2d');
-            if (hospitalPie) hospitalPie.destroy();
-            
-            if (!hospital) {
-                hospitalPie = new Chart(context, { type: 'pie', data: { labels: ['No Data'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
-                const statsEl = document.getElementById('hospitalStats');
-                if (statsEl) statsEl.innerHTML = '❌ No data';
-                return;
+                const statsEl = document.getElementById('overallStats');
+                if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${totalAmb} | 🚐 Non-Ambulance: ${totalNon}<br>📊 Total: ${totalAmb + totalNon} vehicles`;
             }
             
-            hospitalPie = new Chart(context, {
-                type: 'pie',
-                data: { labels: ['Ambulance', 'Non-Ambulance'], datasets: [{ data: [hospital.ambulance, hospital.nonAmbulance], backgroundColor: ['#1f8a7c', '#e89f3e'] }] },
-                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
-            });
-            
-            const total = hospital.ambulance + hospital.nonAmbulance;
-            const statsEl = document.getElementById('hospitalStats');
-            const nameEl = document.getElementById('selectedHospitalName');
-            if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${hospital.ambulance} | 🚐 Non-Ambulance: ${hospital.nonAmbulance}<br>📊 Total: ${total}`;
-            if (nameEl) nameEl.innerText = hospital.hospital;
-        }
-        
-        function populateDropdown(data) {
-            const select = document.getElementById('hospitalSelect');
-            if (!select) return;
-            select.innerHTML = '<option value="ALL">🏥 -- All Hospitals --</option>';
-            data.forEach(h => {
-                const option = document.createElement('option');
-                option.value = h.hospital;
-                option.textContent = h.hospital;
-                select.appendChild(option);
-            });
-        }
-        
-        function showDebugInfo() {
-            const panel = document.getElementById('debugPanel');
-            const content = document.getElementById('debugContent');
-            if (!panel || !content) return;
-            content.innerHTML = `<strong>Debug Info:</strong><br>URL: ${APPS_SCRIPT_URL}<br>Hospitals loaded: ${hospitalData.length}<br><br><strong>Hospital List:</strong><br>${hospitalData.map((d, i) => `${i+1}. ${d.hospital} (🚑 ${d.ambulance} | 🚐 ${d.nonAmbulance})`).join('<br>')}`;
-            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-        }
-        
-        async function renderDashboard() {
-            try {
-                hospitalData = await fetchData();
-                if (!hospitalData.length) throw new Error("No data");
-                createBarChart(hospitalData);
-                updateOverallPie(hospitalData);
-                populateDropdown(hospitalData);
+            function updateHospitalPie(data, hospitalName) {
+                const hospital = data.find(h => h.hospital === hospitalName);
+                const ctx = document.getElementById('hospitalPie');
+                if (!ctx) return;
+                const context = ctx.getContext('2d');
+                if (hospitalPie) hospitalPie.destroy();
                 
-                const select = document.getElementById('hospitalSelect');
-                if (select) {
-                    select.onchange = (e) => {
-                        if (e.target.value === 'ALL') {
-                            const nameEl = document.getElementById('selectedHospitalName');
-                            const statsEl = document.getElementById('hospitalStats');
-                            if (nameEl) nameEl.innerText = 'Select a hospital';
-                            if (statsEl) statsEl.innerHTML = 'Choose from dropdown';
-                            const ctx = document.getElementById('hospitalPie');
-                            if (ctx && hospitalPie) {
-                                const context = ctx.getContext('2d');
-                                hospitalPie.destroy();
-                                hospitalPie = new Chart(context, { type: 'pie', data: { labels: ['Select'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
-                            }
-                        } else {
-                            updateHospitalPie(hospitalData, e.target.value);
-                        }
-                    };
+                if (!hospital) {
+                    hospitalPie = new Chart(context, { type: 'pie', data: { labels: ['No Data'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
+                    const statsEl = document.getElementById('hospitalStats');
+                    if (statsEl) statsEl.innerHTML = '❌ No data';
+                    return;
                 }
-            } catch (error) {
-                const countEl = document.getElementById('dataCount');
-                if (countEl) countEl.innerHTML = '⚠️ Failed to load';
+                
+                hospitalPie = new Chart(context, {
+                    type: 'pie',
+                    data: { labels: ['Ambulance', 'Non-Ambulance'], datasets: [{ data: [hospital.ambulance, hospital.nonAmbulance], backgroundColor: ['#1f8a7c', '#e89f3e'] }] },
+                    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+                });
+                
+                const total = hospital.ambulance + hospital.nonAmbulance;
+                const statsEl = document.getElementById('hospitalStats');
+                const nameEl = document.getElementById('selectedHospitalName');
+                if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${hospital.ambulance} | 🚐 Non-Ambulance: ${hospital.nonAmbulance}<br>📊 Total: ${total}`;
+                if (nameEl) nameEl.innerText = hospital.hospital;
             }
-        }
-        
-        // Initialize charts when page loads
-        if (document.getElementById('barChart')) {
-            renderDashboard();
-        }
-        
-        // Refresh button
-        const refreshBtn = document.getElementById('refreshBtn');
-        if (refreshBtn) refreshBtn.addEventListener('click', () => renderDashboard());
-        
-        // Debug button
-        const debugBtn = document.getElementById('debugBtn');
-        if (debugBtn) debugBtn.addEventListener('click', () => showDebugInfo());
+            
+            function populateDropdown(data) {
+                const select = document.getElementById('hospitalSelect');
+                if (!select) return;
+                select.innerHTML = '<option value="ALL">🏥 -- All Hospitals (${data.length} total) --</option>';
+                data.forEach(h => {
+                    const option = document.createElement('option');
+                    option.value = h.hospital;
+                    option.textContent = h.hospital;
+                    select.appendChild(option);
+                });
+                select.disabled = false;
+            }
+            
+            function showDebugInfo() {
+                const panel = document.getElementById('debugPanel');
+                const content = document.getElementById('debugContent');
+                if (!panel || !content) return;
+                content.innerHTML = `<strong>Debug Info:</strong><br>URL: ${APPS_SCRIPT_URL}<br>Hospitals loaded: ${hospitalData.length}<br><br><strong>Hospital List:</strong><br>${hospitalData.map((d, i) => `${i+1}. ${d.hospital} (🚑 ${d.ambulance} | 🚐 ${d.nonAmbulance})`).join('<br>')}`;
+                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            }
+            
+            async function renderDashboard() {
+                try {
+                    hospitalData = await fetchData();
+                    if (!hospitalData.length) throw new Error("No data");
+                    
+                    // Show charts after data is loaded
+                    showCharts();
+                    
+                    createBarChart(hospitalData);
+                    updateOverallPie(hospitalData);
+                    populateDropdown(hospitalData);
+                    
+                    const select = document.getElementById('hospitalSelect');
+                    if (select) {
+                        select.onchange = (e) => {
+                            if (e.target.value === 'ALL') {
+                                const nameEl = document.getElementById('selectedHospitalName');
+                                const statsEl = document.getElementById('hospitalStats');
+                                if (nameEl) nameEl.innerText = 'Select a hospital';
+                                if (statsEl) statsEl.innerHTML = 'Choose from dropdown';
+                                const ctx = document.getElementById('hospitalPie');
+                                if (ctx && hospitalPie) {
+                                    const context = ctx.getContext('2d');
+                                    hospitalPie.destroy();
+                                    hospitalPie = new Chart(context, { type: 'pie', data: { labels: ['Select'], datasets: [{ data: [1], backgroundColor: ['#ccc'] }] }, options: { plugins: { legend: { display: false } } } });
+                                }
+                            } else {
+                                updateHospitalPie(hospitalData, e.target.value);
+                            }
+                        };
+                    }
+                } catch (error) {
+                    const countEl = document.getElementById('dataCount');
+                    if (countEl) countEl.innerHTML = '⚠️ Failed to load';
+                }
+            }
+            
+            // Wait for Chart.js to load before rendering
+            function waitForChartJS() {
+                if (typeof Chart !== 'undefined') {
+                    renderDashboard();
+                } else {
+                    setTimeout(waitForChartJS, 100);
+                }
+            }
+            
+            // Start loading charts in background (doesn't block page rendering)
+            setTimeout(waitForChartJS, 500);
+            
+            // Refresh button
+            const refreshBtn = document.getElementById('refreshBtn');
+            if (refreshBtn) refreshBtn.addEventListener('click', () => { renderDashboard(); });
+            
+            // Debug button
+            const debugBtn = document.getElementById('debugBtn');
+            if (debugBtn) debugBtn.addEventListener('click', () => { showDebugInfo(); });
+        })();
         </script>
        
 </body>
