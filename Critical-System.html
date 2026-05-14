@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
     <!-- SEO improvement -->
     <meta name="description" content="Vehicle Monitoring System for FEMS Medivest - real-time monitoring of hospital vehicles including ambulance and non-ambulance.">
@@ -31,6 +31,7 @@
             margin-bottom: 20px;
             border-bottom: 2px solid #1f8a7c;
             padding-bottom: 10px;
+            text-align: center;
         }
         .charts-header h2 {
             color: #1a2c3e;
@@ -46,6 +47,26 @@
             padding: 20px;
             background: #fafcfd;
             border-radius: 16px;
+        }
+        /* Mobile-friendly horizontal scroll for bar chart */
+        .bar-chart-wrapper {
+            overflow-x: auto;
+            overflow-y: visible;
+            -webkit-overflow-scrolling: touch;
+            margin: 0 -20px;
+            padding: 0 20px;
+        }
+        .bar-chart-inner {
+            min-width: 600px;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .bar-chart-inner {
+                min-width: 500px;
+            }
+            .bar-chart-container h3 {
+                font-size: 1.1rem;
+            }
         }
         .pie-section {
             background: #fafcfd;
@@ -68,7 +89,7 @@
             cursor: pointer;
             min-width: 250px;
         }
-        .refresh-btn, .debug-btn {
+        .refresh-btn, .vehicle-btn {
             background: #2c7da0;
             color: white;
             border: none;
@@ -76,13 +97,13 @@
             border-radius: 8px;
             cursor: pointer;
         }
-        .debug-btn {
+        .vehicle-btn {
             background: #6c757d;
         }
         .refresh-btn:hover {
             background: #1a5a78;
         }
-        .debug-btn:hover {
+        .vehicle-btn:hover {
             background: #5a6268;
         }
         .pie-flex {
@@ -122,6 +143,7 @@
             margin-bottom: 20px;
             font-size: 14px;
             color: #1a5a78;
+            text-align: center;
         }
         .vehicle-count {
             background: #d4edda;
@@ -132,7 +154,7 @@
             margin-left: 10px;
             font-size: 12px;
         }
-        .debug-info {
+        .vehicle-info {
             background: #f5f5f5;
             padding: 10px;
             border-radius: 8px;
@@ -162,6 +184,10 @@
         .chart-container {
             position: relative;
             min-height: 300px;
+        }
+        /* Center state headers */
+        .state-header {
+            text-align: center !important;
         }
     </style>
 </head>
@@ -221,10 +247,14 @@
             
             <div class="bar-chart-container">
                 <h3>📊 Hospital Comparison (Horizontal Bar Chart)</h3>
-                <div id="barChartPlaceholder" class="chart-loading">
-                    ⏳ Loading chart data from Google Sheets...
+                <div class="bar-chart-wrapper">
+                    <div class="bar-chart-inner">
+                        <div id="barChartPlaceholder" class="chart-loading">
+                            ⏳ Loading chart data from Google Sheets...
+                        </div>
+                        <canvas id="barChart" width="800" height="500" style="width:100%; max-height:600px; display:none;"></canvas>
+                    </div>
                 </div>
-                <canvas id="barChart" width="800" height="500" style="width:100%; max-height:600px; display:none;"></canvas>
             </div>
             
             <div class="pie-section">
@@ -234,7 +264,7 @@
                         <option value="ALL">-- Loading hospitals --</option>
                     </select>
                     <button class="refresh-btn" id="refreshBtn">⟳ Refresh Data</button>
-                    <button class="debug-btn" id="debugBtn">🐛 Show Debug Info</button>
+                    <button class="vehicle-btn" id="vehicleBtn">🚐 Show Vehicle Info</button>
                 </div>
                 
                 <div class="pie-flex">
@@ -257,9 +287,9 @@
                 </div>
             </div>
             
-            <div id="debugPanel" class="debug-info">
-                <strong>🔍 Debug Information:</strong><br>
-                <span id="debugContent">Click "Show Debug Info" after loading data</span>
+            <div id="vehicleInfoPanel" class="vehicle-info">
+                <strong>🔍 Vehicle Information:</strong><br>
+                <span id="vehicleInfoContent">Click "Show Vehicle Info" after loading data</span>
             </div>
         </div>
         
@@ -268,7 +298,7 @@
     <div id="loading-spinner" class="loading-spinner"></div>
     <div class="card-grid">
 
-        <h2 class="state-header" style="color: white;">NEGERI SEMBILAN:</h2>
+        <h2 class="state-header" style="color: white; text-align: center;">NEGERI SEMBILAN:</h2>
         <a class="card" id="card-TUANKU-JAAFAR" href="hospital-page.html?hosp=TUANKU-JAAFAR">
             <div class="card-overlay"></div>
             <h3>Hospital Tuanku Ja'afar, Seremban</h3>
@@ -330,7 +360,7 @@
             </div>
         </a>
 
-        <h2 class="state-header" style="color: white;">MELAKA:</h2>
+        <h2 class="state-header" style="color: white; text-align: center;">MELAKA:</h2>
         <a class="card" id="card-MKA-MLK" href="hospital-page.html?hosp=MKA-MLK">
             <div class="card-overlay"></div>
             <h3>Hospital Melaka</h3>
@@ -362,7 +392,7 @@
             </div>
         </a>
 
-        <h2 class="state-header" style="color: white;">JOHOR:</h2>
+        <h2 class="state-header" style="color: white; text-align: center;">JOHOR:</h2>
         <a class="card" id="card-HSA-JOHOR" href="hospital-page.html?hosp=HSA-JOHOR">
             <div class="card-overlay"></div>
             <h3>Hospital Sultanah Aminah, Johor Bahru</h3>
@@ -691,7 +721,20 @@
                         indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: true,
-                        plugins: { legend: { position: 'top' } },
+                        plugins: { 
+                            legend: { position: 'top' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        let value = context.raw;
+                                        let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        let percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        },
                         scales: {
                             x: { title: { display: true, text: 'Number of Vehicles' }, beginAtZero: true, ticks: { precision: 0 } },
                             y: { title: { display: true, text: 'Hospital Name' }, ticks: { autoSkip: false, font: { size: 10 } } }
@@ -703,6 +746,7 @@
             function updateOverallPie(data) {
                 const totalAmb = data.reduce((s, h) => s + (h.ambulance || 0), 0);
                 const totalNon = data.reduce((s, h) => s + (h.nonAmbulance || 0), 0);
+                const total = totalAmb + totalNon;
                 const ctx = document.getElementById('overallPie');
                 if (!ctx) return;
                 const context = ctx.getContext('2d');
@@ -711,11 +755,26 @@
                 overallPie = new Chart(context, {
                     type: 'pie',
                     data: { labels: ['Ambulance', 'Non-Ambulance'], datasets: [{ data: [totalAmb, totalNon], backgroundColor: ['#1f8a7c', '#e89f3e'] }] },
-                    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+                    options: { 
+                        responsive: true, 
+                        plugins: { 
+                            legend: { position: 'bottom' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        let value = context.raw;
+                                        let percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        } 
+                    }
                 });
                 
                 const statsEl = document.getElementById('overallStats');
-                if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${totalAmb} | 🚐 Non-Ambulance: ${totalNon}<br>📊 Total: ${totalAmb + totalNon} vehicles`;
+                if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${totalAmb} | 🚐 Non-Ambulance: ${totalNon}<br>📊 Total: ${total} vehicles`;
             }
             
             function updateHospitalPie(data, hospitalName) {
@@ -732,16 +791,32 @@
                     return;
                 }
                 
+                const total = hospital.ambulance + hospital.nonAmbulance;
+                
                 hospitalPie = new Chart(context, {
                     type: 'pie',
                     data: { labels: ['Ambulance', 'Non-Ambulance'], datasets: [{ data: [hospital.ambulance, hospital.nonAmbulance], backgroundColor: ['#1f8a7c', '#e89f3e'] }] },
-                    options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+                    options: { 
+                        responsive: true, 
+                        plugins: { 
+                            legend: { position: 'bottom' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        let value = context.raw;
+                                        let percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        } 
+                    }
                 });
                 
-                const total = hospital.ambulance + hospital.nonAmbulance;
                 const statsEl = document.getElementById('hospitalStats');
                 const nameEl = document.getElementById('selectedHospitalName');
-                if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${hospital.ambulance} | 🚐 Non-Ambulance: ${hospital.nonAmbulance}<br>📊 Total: ${total}`;
+                if (statsEl) statsEl.innerHTML = `🚑 Ambulance: ${hospital.ambulance} | 🚐 Non-Ambulance: ${hospital.nonAmbulance}<br>📊 Total: ${total} vehicles`;
                 if (nameEl) nameEl.innerText = hospital.hospital;
             }
             
@@ -758,11 +833,11 @@
                 select.disabled = false;
             }
             
-            function showDebugInfo() {
-                const panel = document.getElementById('debugPanel');
-                const content = document.getElementById('debugContent');
+            function showVehicleInfo() {
+                const panel = document.getElementById('vehicleInfoPanel');
+                const content = document.getElementById('vehicleInfoContent');
                 if (!panel || !content) return;
-                content.innerHTML = `<strong>Debug Info:</strong><br>URL: ${APPS_SCRIPT_URL}<br>Hospitals loaded: ${hospitalData.length}<br><br><strong>Hospital List:</strong><br>${hospitalData.map((d, i) => `${i+1}. ${d.hospital} (🚑 ${d.ambulance} | 🚐 ${d.nonAmbulance})`).join('<br>')}`;
+                content.innerHTML = `<strong>📋 Vehicle Data Summary:</strong><br>URL: ${APPS_SCRIPT_URL}<br>Hospitals loaded: ${hospitalData.length}<br><br><strong>Hospital Vehicle Counts:</strong><br>${hospitalData.map((d, i) => `${i+1}. ${d.hospital}<br>&nbsp;&nbsp;&nbsp;🚑 Ambulance: ${d.ambulance} | 🚐 Non-Ambulance: ${d.nonAmbulance}`).join('<br>')}`;
                 panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
             }
             
@@ -819,9 +894,9 @@
             const refreshBtn = document.getElementById('refreshBtn');
             if (refreshBtn) refreshBtn.addEventListener('click', () => { renderDashboard(); });
             
-            // Debug button
-            const debugBtn = document.getElementById('debugBtn');
-            if (debugBtn) debugBtn.addEventListener('click', () => { showDebugInfo(); });
+            // Vehicle Info button
+            const vehicleBtn = document.getElementById('vehicleBtn');
+            if (vehicleBtn) vehicleBtn.addEventListener('click', () => { showVehicleInfo(); });
         })();
         </script>
        
