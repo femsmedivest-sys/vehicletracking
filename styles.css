@@ -349,13 +349,15 @@ body {
 .status-JPJ-PASS {
     // background-color: #0000FF;
     // background-color: #1616FF;
-    background-color: #83F28F;
+    // background-color: #83F28F;
+    background-color: #0F172A;
     color: #000000 !important;
 }
 
 .status-JPJ-FAIL {
     //background-color: #FFFF00;
-    background-color: #FF4122;
+    //background-color: #FF4122;
+    background-color: #CBD5E1;
     color: #000000 !important;
 }
 
