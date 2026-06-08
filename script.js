@@ -379,16 +379,16 @@ const submissionForms = {
     // 'PGD-PASIR-GUDANG_BAS System': 'https://femsmedivest-sys.github.io/Submission-Form/PGD.html',
 };
 
-// Add this function to count JPJ Pass/Fail from data
-function countJPJStatus(data) {
+// Add this function to count JKR Pass/Fail from data
+function countJKRStatus(data) {
     let passCount = 0;
     let failCount = 0;
     
     data.forEach(item => {
-        const jpjStatus = item['JPJ'] ? item['JPJ'].trim().toUpperCase() : '';
-        if (jpjStatus === 'PASS') {
+        const jkrStatus = item['JKR'] ? item['JKR'].trim().toUpperCase() : '';
+        if (jkrStatus === 'PASS') {
             passCount++;
-        } else if (jpjStatus === 'FAIL') {
+        } else if (jkrStatus === 'FAIL') {
             failCount++;
         }
     });
@@ -423,14 +423,14 @@ function updateHospitalCards() {
                     const functioningCount = data.filter(item => item.Status && item.Status.trim().toUpperCase() === 'FUNCTIONING').length;
                     const notFunctioningCount = data.filter(item => item.Status && item.Status.trim().toUpperCase() === 'NOT FUNCTIONING').length;
                     
-                    // Add JPJ counts
-                    const { passCount, failCount } = countJPJStatus(data);
+                    // Add JKR counts
+                    const { passCount, failCount } = countJKRStatus(data);
 
                     // Update the card spans
                     const functioningSpan = cardElement.querySelector('.status-FUNCTIONING');
                     const notFunctioningSpan = cardElement.querySelector('.status-NOT-FUNCTIONING');
-                    const jpjPassSpan = cardElement.querySelector('.status-JPJ-PASS');
-                    const jpjFailSpan = cardElement.querySelector('.status-JPJ-FAIL');
+                    const jkrPassSpan = cardElement.querySelector('.status-JKR-PASS');
+                    const jkrFailSpan = cardElement.querySelector('.status-JKR-FAIL');
 
                     if (functioningSpan) {
                         functioningSpan.textContent = `FUNCTIONING: ${functioningCount}`;
@@ -438,11 +438,11 @@ function updateHospitalCards() {
                     if (notFunctioningSpan) {
                         notFunctioningSpan.textContent = `NOT FUNCTIONING: ${notFunctioningCount}`;
                     }
-                    if (jpjPassSpan) {
-                        jpjPassSpan.textContent = `JKR PASS: ${passCount}`;
+                    if (jkrPassSpan) {
+                        jkrPassSpan.textContent = `JKR PASS: ${passCount}`;
                     }
-                    if (jpjFailSpan) {
-                        jpjFailSpan.textContent = `JKR FAIL: ${failCount}`;
+                    if (jkrFailSpan) {
+                        jkrFailSpan.textContent = `JKR FAIL: ${failCount}`;
                     }
                 })
                 .catch(error => {
@@ -583,19 +583,19 @@ criticalSystems.forEach(system => {
     systemName.textContent = system.name;
     card.appendChild(systemName);
     
-    // Calculate status for this system including JPJ
+    // Calculate status for this system including JKR
     const systemData = allData.filter(item => (item['Type of System'] || '').trim().toUpperCase() === (system.id || '').trim().toUpperCase());
     const functioningCount = systemData.filter(item => (item.Status || '').trim().toUpperCase() === 'FUNCTIONING').length;
     const notFunctioningCount = systemData.filter(item => (item.Status || '').trim().toUpperCase() === 'NOT FUNCTIONING').length;
     
-    // Add JPJ counts for this system
+    // Add JKR counts for this system
     let passCount = 0;
     let failCount = 0;
     systemData.forEach(item => {
-        const jpjStatus = item['JPJ'] ? item['JPJ'].trim().toUpperCase() : '';
-        if (jpjStatus === 'PASS') {
+        const jkrStatus = item['JKR'] ? item['JKR'].trim().toUpperCase() : '';
+        if (jkrStatus === 'PASS') {
             passCount++;
-        } else if (jpjStatus === 'FAIL') {
+        } else if (jkrStatus === 'FAIL') {
             failCount++;
         }
     });
@@ -612,18 +612,18 @@ criticalSystems.forEach(system => {
     spanNF.className = 'status-box status-NOT-FUNCTIONING';
     spanNF.textContent = `NOT FUNCTIONING: ${notFunctioningCount}`;
     
-    const spanJPJPass = document.createElement('span');
-    spanJPJPass.className = 'status-box status-JPJ-PASS';
-    spanJPJPass.textContent = `JKR PASS: ${passCount}`;
+    const spanJKRPass = document.createElement('span');
+    spanJKRPass.className = 'status-box status-JKR-PASS';
+    spanJKRPass.textContent = `JKR PASS: ${passCount}`;
     
-    const spanJPJFail = document.createElement('span');
-    spanJPJFail.className = 'status-box status-JPJ-FAIL';
-    spanJPJFail.textContent = `JKR FAIL: ${failCount}`;
+    const spanJKRFail = document.createElement('span');
+    spanJKRFail.className = 'status-box status-JKR-FAIL';
+    spanJKRFail.textContent = `JKR FAIL: ${failCount}`;
 
     statusContainer.appendChild(spanF);
     statusContainer.appendChild(spanNF);
-    statusContainer.appendChild(spanJPJPass);
-    statusContainer.appendChild(spanJPJFail);
+    statusContainer.appendChild(spanJKRPass);
+    statusContainer.appendChild(spanJKRFail);
     
     card.appendChild(statusContainer);
     
@@ -743,20 +743,20 @@ criticalSystems.forEach(system => {
                       const card = document.createElement('div');
                       card.className = 'asset-card';
                       
-                      // Get JPJ status for display
-                      const jpjStatus = item['JPJ'] ? item['JPJ'] : 'N/A';
-                      let jpjClass = '';
-                      const jpjUpper = jpjStatus.trim().toUpperCase();
-                      if (jpjUpper === 'PASS') {
-                          jpjClass = 'status-JPJ-PASS';
-                      } else if (jpjUpper === 'FAIL') {
-                          jpjClass = 'status-JPJ-FAIL';
+                      // Get JKR status for display
+                      const jkrStatus = item['JKR'] ? item['JKR'] : 'N/A';
+                      let jkrClass = '';
+                      const jkrUpper = jkrStatus.trim().toUpperCase();
+                      if (jkrUpper === 'PASS') {
+                          jkrClass = 'status-JKR-PASS';
+                      } else if (jkrUpper === 'FAIL') {
+                          jkrClass = 'status-JKR-FAIL';
                       }
                       
                       card.innerHTML = `
                           <h3>${item['Asset']}</h3>
                           <p><strong>Status:</strong> <span class="status-box ${statusClass}">${item['Status'] || 'N/A'}</span></p>
-                          <p><strong>JKR:</strong> <span class="status-box ${jpjClass}">${jpjStatus}</span></p>
+                          <p><strong>JKR:</strong> <span class="status-box ${jkrClass}">${jkrStatus}</span></p>
                           <p><strong>Remark:</strong> ${item['Remark'] || ''}</p>
                           <p><strong>Action:</strong> ${item['Action'] || ''}</p>
                           <p class="last-update">Last Update: ${formattedDate}</p>
