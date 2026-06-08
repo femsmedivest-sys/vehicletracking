@@ -439,10 +439,10 @@ function updateHospitalCards() {
                         notFunctioningSpan.textContent = `NOT FUNCTIONING: ${notFunctioningCount}`;
                     }
                     if (jpjPassSpan) {
-                        jpjPassSpan.textContent = `JPJ PASS: ${passCount}`;
+                        jpjPassSpan.textContent = `JKR PASS: ${passCount}`;
                     }
                     if (jpjFailSpan) {
-                        jpjFailSpan.textContent = `JPJ FAIL: ${failCount}`;
+                        jpjFailSpan.textContent = `JKR FAIL: ${failCount}`;
                     }
                 })
                 .catch(error => {
@@ -614,11 +614,11 @@ criticalSystems.forEach(system => {
     
     const spanJPJPass = document.createElement('span');
     spanJPJPass.className = 'status-box status-JPJ-PASS';
-    spanJPJPass.textContent = `JPJ PASS: ${passCount}`;
+    spanJPJPass.textContent = `JKR PASS: ${passCount}`;
     
     const spanJPJFail = document.createElement('span');
     spanJPJFail.className = 'status-box status-JPJ-FAIL';
-    spanJPJFail.textContent = `JPJ FAIL: ${failCount}`;
+    spanJPJFail.textContent = `JKR FAIL: ${failCount}`;
 
     statusContainer.appendChild(spanF);
     statusContainer.appendChild(spanNF);
@@ -756,7 +756,7 @@ criticalSystems.forEach(system => {
                       card.innerHTML = `
                           <h3>${item['Asset']}</h3>
                           <p><strong>Status:</strong> <span class="status-box ${statusClass}">${item['Status'] || 'N/A'}</span></p>
-                          <p><strong>JPJ:</strong> <span class="status-box ${jpjClass}">${jpjStatus}</span></p>
+                          <p><strong>JKR:</strong> <span class="status-box ${jpjClass}">${jpjStatus}</span></p>
                           <p><strong>Remark:</strong> ${item['Remark'] || ''}</p>
                           <p><strong>Action:</strong> ${item['Action'] || ''}</p>
                           <p class="last-update">Last Update: ${formattedDate}</p>
