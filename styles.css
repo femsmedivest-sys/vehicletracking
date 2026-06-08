@@ -350,14 +350,17 @@ body {
     // background-color: #0000FF;
     // background-color: #1616FF;
     // background-color: #83F28F;
-    background-color: #0F172A;
+    //background-color: #0F172A;
+    background-color: #F59E0B; 
     color: #000000 !important;
 }
 
 .status-JPJ-FAIL {
     //background-color: #FFFF00;
     //background-color: #FF4122;
-    background-color: #CBD5E1;
+    //background-color: #CBD5E1;
+    //background-color: #CBD5E1;
+    background-color: #B84411; 
     color: #000000 !important;
 }
 
